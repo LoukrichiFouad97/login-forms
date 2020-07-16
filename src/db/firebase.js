@@ -25,3 +25,36 @@ const twitterProvider = new firebase.auth.TwitterAuthProvider();
 export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 export const singInWithFacebook = () => auth.signInWithPopup(facebookProvider);
 export const signInWithTwitter = () => auth.signInWithPopup(twitterProvider);
+
+export const createUserProfileDocument = async (
+	userAuth,
+	...additionalData
+) => {
+	if (!userAuth) return;
+
+	// access to user document
+	const userRef = firestore.doc(`users/${userAuth.uid}`);
+
+	// get user snapshot
+	const snapshot = await userRef.get();
+
+	if (!snapshot.exists) {
+		// Get displayName and email
+		const { displayName, email } = userAuth;
+		const createdAt = new Date();
+
+		// store user data into collection
+		try {
+			await userRef.set({
+				displayName,
+				email,
+				createdAt,
+				...additionalData,
+			});
+		} catch (err) {
+			console.log("Error registering user", err.message);
+		}
+	}
+
+	return userRef;
+};
