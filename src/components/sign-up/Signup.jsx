@@ -12,11 +12,12 @@ export default class Signup extends Component {
 	}
 
 	handleChange = (e) => {
+		e.preventDefault();
 		const { name, value } = e.target;
 		this.setState({ [name]: value });
 	};
 
-	handleSubmit = async (e) => {
+	handleSubmit = (e) => {
 		e.preventDefault();
 
 		const { email, password, confirmPassword } = this.state;
@@ -26,12 +27,14 @@ export default class Signup extends Component {
 			return;
 		}
 
-		try {
-			await auth.createUserWithEmailAndPassword(email, password);
-			this.setState({ email: "", password: "", confirmPassword: "" });
-		} catch (err) {
-			console.log(err);
-		}
+		auth
+			.createUserWithEmailAndPassword(email, password)
+			.then((res) => console.log(res))
+			.catch((err) => {
+				console.log(err);
+			});
+
+		this.setState({ email: "", password: "", confirmPassword: "" });
 	};
 
 	render() {

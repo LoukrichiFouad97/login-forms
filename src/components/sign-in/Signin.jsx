@@ -22,17 +22,18 @@ export default class Signin extends Component {
 	handleSubmit = async (e) => {
 		e.preventDefault();
 		const { email, password } = this.state;
-		try {
-			await auth.signInWithEmailAndPassword(email, password);
-		} catch (err) {
-			console.log(err);
-		}
+
+		auth
+			.signInWithEmailAndPassword(email, password)
+			.then((u) => console.log(u.user))
+			.catch((err) => console.log(err));
+		this.setState({ email: "", password: "" });
 	};
 
 	render() {
 		return (
 			<div className="col-md-6 col   p-2 d-flex flex-column justify-content-center align-items-center">
-				<form className="w-75">
+				<form className="w-75" onSubmit={this.handleSubmit}>
 					<h1 className="mb-4">Sign-in</h1>
 					<div className="form-group">
 						<label htmlFor="email">Email address</label>

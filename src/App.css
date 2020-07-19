@@ -7,3 +7,20 @@
 	background: url("https://free4kwallpapers.com/uploads/originals/2020/04/16/bright-moon-city-wallpaper.jpg")
 		no-repeat center center/cover;
 }
+
+.sign-in {
+	position: absolute;
+	z-index: 10;
+	top: 10px;
+	left: 10px;
+	background: #fff;
+	color: black;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	border: 0;
+}
+
+.sign-in:hover {
+	background-color: rgba(255,255,255,0.9);
+}
